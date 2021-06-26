@@ -24,10 +24,10 @@
 // | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ALT  |
 //                    | GUI | LT(1, SPACE) | SPC |   | ENT | RSE  | CAPS |
                         bindings = <
-   &kp TAB    &kp Q &kp W  &kp E  &kp R  &kp T   &kp Y  &kp U  &kp I     &kp O   &kp P    &kp BACKSLASH
+   &kp ESC    &kp Q &kp W  &kp E  &kp R  &kp T   &kp Y  &kp U  &kp I     &kp O   &kp P    &kp BACKSLASH
    &kp LCTRL  &kp A &kp S  &kp D  &kp F  &kp G   &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
    &kp LSHFT  &kp Z &kp X  &kp C  &kp V  &kp B   &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp RALT
-                  &kp LGUI &lt NUMB SPACE &lt NAVI RET   &lt NAVI ESC &lt NUMB BSPC &kp CAPSLOCK
+                  &kp LGUI &lt NUMB TAB &lt NAVI RET   &lt NAVI SPACE &lt NUMB BSPC &kp CAPSLOCK
                         >;
                 };
                 
