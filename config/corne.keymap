@@ -19,14 +19,14 @@
 
                 default_layer {
 // -----------------------------------------------------------------------------------------
-// |  TAB |  Q  |  W  |  E  |  R  |  T    |   |  Y    |  U         |  I  |  O  |  P  |  \   |
-// | CTRL |  A  |  S  |  D  |  F  |  G    |   |  H    |  J         |  K  |  L  |  ;  |  '   |
-// | SHFT |  Z  |  X  |  C  |  V  |  B    |   |  N    |  M         |  ,  |  .  |  /  | ALT  |
-//                    | GUI | MO1 | ENTER |   | SPACE | BACKSPACE  | CAPS |
+// |  TAB |  Q  |  W  |  E  |  R  |  T    |   |  Y    |   U         |  I  |  O  |  P  |  \      |
+// | CTRL |  A  |  S  |  D  |  F  |  G    |   |  H    |   J         |  K  |  L  |  ;  |  '      |
+// | SHFT |  Z  |  X  |  C  |  V  |  B    |   |  N    |   M         |  ,  |  .  |  /  | ), ALT  |
+//                    | GUI | MO1 | ENTER |   | SPACE |  BACKSPACE  | CAPS |
                         bindings = <
    &kp TAB    &kp Q &kp W  &kp E  &kp R  &kp T   &kp Y  &kp U  &kp I     &kp O   &kp P    &kp BACKSLASH
    &kp LCTRL  &kp A &kp S  &kp D  &kp F  &kp G   &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT  &kp Z &kp X  &kp C  &kp V  &kp B   &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &lt RALT LPAR
+   &kp LSHFT  &kp Z &kp X  &kp C  &kp V  &kp B   &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &lt RALT RPAR
                   &kp LGUI &mo 1 &lt NAVI RET   &lt NAVI SPACE &lt NUMB BSPC &kp CAPSLOCK
                         >;
                 };
@@ -38,8 +38,8 @@
 // | SHFT |     |  +  |  -  |  {  |  [  |   |  ]  |  }  |  =  |  _  |     |   `  |
 //                    | GUI |     | MO3 |   |  ,  |  .  |  ?  |
                         bindings = <
-   &kp ESC    &kp N1       &kp N2            &kp N3             &kp N4               &kp N5            &kp N6                   &kp N7                     &kp N8                 &kp N9           &kp N0     &kp BSPC
-   &trans     &kp EXCL     &kp AT            &kp HASH           &kp DLLR             &kp PRCNT         &kp CARET                &kp AMPS                   &kp KP_MULTIPLY        &kp LPAR         &kp RPAR   &trans
+   &kp ESC    &kp N1       &kp N2            &kp N3             &kp N4               &kp N5            &kp N6                   &kp N7                     &kp N8                 &kp N9                   &kp N0     &kp BSPC
+   &trans     &kp EXCL     &kp AT            &kp HASH           &kp DLLR             &kp PRCNT         &kp CARET                &kp AMPS                   &kp KP_MULTIPLY        &kp LPAR                 &kp RPAR   &trans
    &kp LSHFT  &trans       &kp KP_PLUS       &kp KP_MINUS       &kp LEFT_BRACE       &kp LEFT_BRACKET  &kp RIGHT_BRACKET        &kp RIGHT_BRACE            &kp KP_EQUAL           &kp UNDERSCORE           &trans     &kp GRAVE
                                         &kp LGUI     &trans               &mo ADJUST        &kp KP_N1                &kp KP_N2                    &kp KP_N3
                         >;
@@ -47,14 +47,14 @@
                 
                 raise_layer {
 // -----------------------------------------------------------------------------------------
-// |      |     |      |  UP  |       |     |   |     |     |     |  UP |     |      |
-// |      |     | LEFT | DOWN | RIGHT |     |   |     |     | LEFT| DOWN|RIGHT|      |
-// |      |     |      |      |       |     |   |     |     |     |     |     |      |
-//                     |      |       |     |   |     |     |     |
+// | CMD+SHIFT+4 |     |  PU  |  UP  |   PD  | HOME|   |     |  PU    |   UP   |   PD   | HOME | CMD+SHIFT+4 |
+// |             |     | LEFT | DOWN | RIGHT | END |   |     |  LEFT  |  DOWN  |  RIGHT | END  |             |
+// |             |     |      |      |       |     |   |     |        |        |        |      |             |
+//                     |      |       |     |   |     |        |        |
                         bindings = <
-   &kp LG(LS(N4))  &kp EXCL   &kp PAGE_UP        &kp UP_ARROW      &kp PAGE_DOWN      &kp HOME    &kp CARET   &kp AMPS         &kp UP_ARROW       &kp LPAR           &kp RPAR     &kp LG(LS(N4))
-   &kp LCTRL       &trans     &kp LEFT_ARROW     &kp DOWN_ARROW    &kp RIGHT_ARROW    &kp END     &kp MINUS   &kp LEFT_ARROW   &kp DOWN_ARROW     &kp RIGHT_ARROW    &kp PIPE     &kp GRAVE
-   &kp LSHFT       &trans     &trans             &trans            &trans             &trans      &trans      &trans           &trans             &trans             &kp BSLH     &kp TILDE
+   &kp LG(LS(N4))  &trans     &kp PAGE_UP        &kp UP_ARROW      &kp PAGE_DOWN      &kp HOME    &kp CARET   &kp PAGE_UP      &kp UP_ARROW       &kp PAGE_DOWN      &kp HOME     &kp LG(LS(N4))
+   &trans          &trans     &kp LEFT_ARROW     &kp DOWN_ARROW    &kp RIGHT_ARROW    &kp END     &kp MINUS   &kp LEFT_ARROW   &kp DOWN_ARROW     &kp RIGHT_ARROW    &kp END      &trans
+   &trans          &trans     &trans             &trans            &trans             &trans      &trans      &trans           &trans             &trans             &trans       &trans
                                    &kp LGUI &trans &kp SPACE   &kp RET &trans &kp RALT
                         >;
                 };
