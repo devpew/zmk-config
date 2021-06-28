@@ -61,14 +61,14 @@
 // |----------------+-------+--------+--------+---------+---------|       |--------+--------+---------+---------+----------+-------------|
 // |                |       |        |        |         |         |       |        |        |         |         |          |             |
 // '---------------------------------+--------+---------+---------+       |--------+--------+---------+----------------------------------'
-//                                   |  GUI   |         |   MO3   |       |    ,   |    .   |    ?    |
+//                                   |  GUI   |   MO3   |         |       |        |        |         |
 //                                   '--------+---------+---------'       '--------+--------+---------'
 
                         bindings = <
    &kp LG(LS(N4))  &trans     &kp PAGE_UP        &kp UP_ARROW      &kp PAGE_DOWN      &kp HOME    &kp CARET   &kp PAGE_UP      &kp UP_ARROW       &kp PAGE_DOWN      &kp HOME     &kp LG(LS(N4))
    &trans          &trans     &kp LEFT_ARROW     &kp DOWN_ARROW    &kp RIGHT_ARROW    &kp END     &kp MINUS   &kp LEFT_ARROW   &kp DOWN_ARROW     &kp RIGHT_ARROW    &kp END      &trans
    &trans          &trans     &trans             &trans            &trans             &trans      &trans      &trans           &trans             &trans             &trans       &trans
-                                   &kp LGUI &trans &kp SPACE   &kp RET &trans &kp RALT
+                                   &kp LGUI &mo ADJUST &trans   &trans &trans &trans
                         >;
                 };
 
