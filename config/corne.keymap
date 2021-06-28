@@ -47,10 +47,10 @@
                 
                 raise_layer {
 // -----------------------------------------------------------------------------------------
-// | CMD+SHIFT+4 |     |  PU  |  UP  |   PD  | HOME|   |     |  PU    |   UP   |   PD   | HOME | CMD+SHIFT+4 |
-// |             |     | LEFT | DOWN | RIGHT | END |   |     |  LEFT  |  DOWN  |  RIGHT | END  |             |
-// |             |     |      |      |       |     |   |     |        |        |        |      |             |
-//                     |      |       |     |   |     |        |        |
+// | CMD+SHIFT+4 |     |  PU  |  UP  |   PD  | HOME|   |  PU   |  UP    |   PD   |  HOME  |     | CMD+SHIFT+4 |
+// |             |     | LEFT | DOWN | RIGHT | END |   |  LEFT |  DOWN  |  RIGHT |  END   |     |             |
+// |             |     |      |      |       |     |   |       |        |        |        |     |             |
+//                     |      |      |       |     |   |       |        |
                         bindings = <
    &kp LG(LS(N4))  &trans     &kp PAGE_UP        &kp UP_ARROW      &kp PAGE_DOWN      &kp HOME    &kp CARET   &kp PAGE_UP      &kp UP_ARROW       &kp PAGE_DOWN      &kp HOME     &kp LG(LS(N4))
    &trans          &trans     &kp LEFT_ARROW     &kp DOWN_ARROW    &kp RIGHT_ARROW    &kp END     &kp MINUS   &kp LEFT_ARROW   &kp DOWN_ARROW     &kp RIGHT_ARROW    &kp END      &trans
