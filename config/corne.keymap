@@ -15,6 +15,19 @@
 #define ADJUST 3
 
 / {
+
+    behaviors {        
+        hm: homerow_mods {
+        compatible = "zmk,behavior-hold-tap";
+        label = "HOMEROW_MODS";
+        #binding-cells = <2>;
+        tapping-term-ms = <150>;
+        quick_tap_ms = <0>;
+        flavor = "tap-preferred";
+        bindings = <&kp>, <&kp>;
+        };
+    };
+
         keymap {
                 compatible = "zmk,keymap";
 
@@ -30,7 +43,7 @@
 //                                   '--------+---------+---------'       '-------+---------+---------'
                         bindings = <
    &kp ESC        &kp Q       &kp W      &kp E     &kp R           &kp T   &kp Y  &kp U           &kp I        &kp O     &kp P      &kp BACKSLASH
-   &mt LCTRL TAB  &kp A       &kp S      &kp D     &mt LSHFT F     &kp G   &kp H  &mt LSHFT J     &kp K        &kp L     &kp SEMI   &kp SQT
+   &mt LCTRL TAB  &kp A       &kp S      &kp D     &mt LSHFT F     &kp G   &kp H  &hm LSHFT J     &kp K        &kp L     &kp SEMI   &kp SQT
    &kp LSHFT      &kp Z       &kp X      &kp C     &kp V           &kp B   &kp N  &kp M           &kp COMMA    &kp DOT   &kp FSLH   &mt RALT GRAVE
                   &kp LGUI    &mo 1      &lt NAVI RET              &lt NAVI SPACE                 &lt NUMB BSPC    &kp CAPSLOCK
                         >;
