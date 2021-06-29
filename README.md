@@ -4,7 +4,7 @@
 
 ![mainlayer](https://github.com/devpew/zmk-config/blob/master/layero.png)
 
-![lowerlayer](https://github.com/devpew/zmk-config/blob/master/layer2.png)
+![lowerlayer](https://github.com/devpew/zmk-config/blob/master/layout2.png)
 
 ![raiselayer](https://github.com/devpew/zmk-config/blob/master/layer3.png)
 
