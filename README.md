@@ -8,5 +8,5 @@
 
 ![raiselayer](https://github.com/devpew/zmk-config/blob/master/layer3.png)
 
-![adjustlayer](https://github.com/devpew/zmk-config/blob/master/layer4.png)
+![adjustlayer](https://github.com/devpew/zmk-config/blob/master/layer4(1).png)
 
