@@ -1,4 +1,8 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    paths:
+      - 'config/**'
+  workflow_dispatch:
 
 name: Build
 
@@ -6,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: zmkfirmware/zmk-build-arm:2.4
+      image: zmkfirmware/zmk-build-arm:2.5
     name: Build
     steps:
       - name: Checkout
@@ -33,6 +37,7 @@ jobs:
         run: west update
       - name: West Zephyr export
         run: west zephyr-export
+
       - name: West Build (Corne Left)
         run: west build -s zmk/app -b nrfmicro_13 -- -DSHIELD=corne_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
       - name: Corne DTS File
@@ -47,9 +52,9 @@ jobs:
         with:
           name: firmware
           path: corne_left_nrfmicro_13.uf2
+
       - name: West Build (Corne Right)
         run: west build --pristine -s zmk/app -b nrfmicro_13 -- -DSHIELD=corne_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-
       - name: Corne Right Kconfig file
         run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
       - name: Rename zmk.uf2
@@ -59,3 +64,33 @@ jobs:
         with:
           name: firmware
           path: corne_right_nrfmicro_13.uf2
+
+      - name: West Build (Dao Left)
+        run: west build -p -s zmk/app -b dao_left -d dao_left -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+      - name: Dao DTS File
+        if: ${{ always() }}
+        run: cat -n dao_left/zephyr/dao_left.dts.pre.tmp
+      - name: Dao Left Kconfig file
+        run: cat dao_left/zephyr/.config | grep -v "^#" | grep -v "^$"
+      - name: Rename zmk.uf2
+        run: cp dao_left/zephyr/zmk.uf2 dao_left.uf2
+      - name: Archive (Dao Left)
+        uses: actions/upload-artifact@v2
+        with:
+          name: firmware
+          path: dao_left.uf2
+
+      - name: West Build (Dao Right)
+        run: west build -p -s zmk/app -b dao_right -d dao_right -- -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+      - name: Dao DTS File
+        if: ${{ always() }}
+        run: cat -n dao_right/zephyr/dao_right.dts.pre.tmp
+      - name: Dao Right Kconfig file
+        run: cat dao_right/zephyr/.config | grep -v "^#" | grep -v "^$"
+      - name: Rename zmk.uf2
+        run: cp dao_right/zephyr/zmk.uf2 dao_right.uf2
+      - name: Archive (Dao Right)
+        uses: actions/upload-artifact@v2
+        with:
+          name: firmware
+          path: dao_right.uf2
