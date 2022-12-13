@@ -18,5 +18,6 @@ include:
     shield: [corne_left, corne_right]
     name: ["Corne"]
   - board: nrfmicro_13_52833
-    shield: [tbkmini_left, tbkmini_right]
-    name: ["TBKMINI"]
+    shield: tbkmini_left
+  - board: nrfmicro_13_52833
+    shield: tbkmini_right
