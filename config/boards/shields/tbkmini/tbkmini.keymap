@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2021 Casey Webster
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+	keymap {
+		compatible = "zmk,keymap";
+
+		default_layer {
+// ---------------------------------------------------------------------------------------------------------------------------------
+// |  ESC  |  Q  |  W  |  F   |  P   |  B   |    |  J   |  L   |  U  |  Y  |  '  |   \  |
+// |  TAB  |  A  |  R  |  S   |  T   |  G   |    |  M   |  N   |  E  |  I  |  O  |   '  |
+// | SHIFT |  Z  |  X  |  C   |  D   |  V   |    |  K   |  H   |  ,  |  .  |  /  | CTRL |
+//                     | ESC  | SPC  | TAB  |    | RET  | BSPC | DEL |
+			bindings = <
+	&kp ESC   &kp Q &kp W &kp F &kp P &kp B          &kp J &kp L  &kp U     &kp Y   &kp SQT  &kp BSLH
+	&kp TAB   &kp A &kp R &kp S &kp T &kp G          &kp M &kp N  &kp E     &kp I   &kp O    &kp SQT
+	&kp LSHFT &kp Z &kp X &kp C &kp D &kp V          &kp K &kp H  &kp COMMA &kp DOT &kp FSLH &kp RCTRL
+	                &kp ESC  &kp SPC &kp TAB         &kp RET &kp BSPC &kp DEL
+			>;
+		};
+	};
+};
