@@ -13,17 +13,7 @@
 #
 ---
 include:
-  - board: nrfmicro_13
-    shield: [jorne_left, jorne_right]
-    name: "Jorne Brass"
+
   - board: nrfmicro_13_52833
-    shield: [jorne_left, jorne_right]
-    name: ["Jorne Alps", "Sporne", "RT-22", "Corne"]
-  - board: nrfmicro_13_52833
-    shield: radpad
-  - board: [jorian840_left, jorian840_right]
-    name: ["Jorian840 Omron", "Jorian840 Cobalt"]
-  - board: [skean_left, skean_right]
-    name: ["Skean T1", "Skean Alps"]
-  - board: [dao_left, dao_right]
-  - board: [wenki44_left, wenki44_right]
+    shield: [corne_left, corne_right]
+    name: ["Corne"]
