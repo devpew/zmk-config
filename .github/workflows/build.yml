@@ -1,20 +1,110 @@
-on: [push, pull_request, workflow_dispatch]
+name: User config build with custom names
 
-name: Build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+   inputs:
+      build_matrix_path:
+        description: "Path to the build matrix file"
+        default: "build.yaml"
+        required: false
+        type: string
+      config_path:
+        description: "Path to the config directory"
+        default: "config"
+        required: false
+        type: string
+      fallback_binary:
+        description: "Fallback binary format, if no *.uf2 file was built"
+        default: "bin"
+        required: false
+        type: string
+      archive_name:
+        description: 'Archive output file name'
+        default: 'zmk_firmware'
+        required: false
+        type: string
 
 jobs:
+  env-setup:
+    runs-on: ubuntu-latest
+    name: Prepare environment variables
+    outputs:
+      build_matrix_path: ${{ env.build_matrix_path }}
+      config_path: ${{ env.config_path }}
+      fallback_binary: ${{ env.fallback_binary }}
+      archive_name: ${{ env.archive_name }}
+    steps:
+      - name: Export
+        run: |
+          if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]
+          then
+            echo "build_matrix_path=${{ inputs.build_matrix_path }}" >> $GITHUB_ENV
+            echo "config_path=${{ inputs.config_path }}" >> $GITHUB_ENV
+            echo "fallback_binary=${{ inputs.fallback_binary }}" >> $GITHUB_ENV
+            echo "archive_name=${{ inputs.archive_name }}" >> $GITHUB_ENV
+          else
+            echo "build_matrix_path=build.yaml" >> $GITHUB_ENV
+            echo "config_path=config" >> $GITHUB_ENV
+            echo "fallback_binary=bin" >> $GITHUB_ENV
+            echo "archive_name=zmk_firmware" >> $GITHUB_ENV
+          fi
+
+  matrix:
+    runs-on: ubuntu-latest
+    name: Fetch Build Keyboards
+    needs: env-setup
+    outputs:
+      build_matrix: ${{ env.build_matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install yaml2json
+        run: python3 -m pip install remarshal
+
+      - name: Fetch Build Matrix
+        run: |
+          chmod +x json_unwrapper.py
+          echo "build_matrix=$(yaml2json ${{ needs.env-setup.outputs.build_matrix_path }} | ./json_unwrapper.py | jq -c .)" >> $GITHUB_ENV
+          yaml2json ${{ needs.env-setup.outputs.build_matrix_path }} | ./json_unwrapper.py | jq
+
   build:
     runs-on: ubuntu-latest
     container:
-      image: zmkfirmware/zmk-build-arm:2.4
+      image: zmkfirmware/zmk-build-arm:stable
+    needs: [matrix, env-setup]
     name: Build
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix.outputs.build_matrix) }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Cache west modules
-        uses: actions/cache@v2
+      - name: Prepare variables
+        shell: bash -x {0}
         env:
-          cache-name: cache-zephyr-modules
+          file_name_suffix: ""
+        run: |
+          if [ -n "${{ matrix.shield }}" ]
+          then
+            echo "extra_cmake_args=-DSHIELD=\"${{ matrix.shield }}\"" >> $GITHUB_ENV
+            echo "artifact_name=${{ matrix.shield }}-${{ matrix.board }}${{ matrix.file_name_suffix }}-zmk" >> $GITHUB_ENV
+            echo "display_name=${{ matrix.shield }} - ${{ matrix.board }}${{ matrix.file_name_suffix }}" >> $GITHUB_ENV
+          else
+            echo "extra_cmake_args=" >> $GITHUB_ENV
+            echo "artifact_name=${{ matrix.board }}${{ matrix.file_name_suffix }}-zmk" >> $GITHUB_ENV
+            echo "display_name=${{ matrix.board }}${{ matrix.file_name_suffix }}" >> $GITHUB_ENV
+          fi
+          echo "zephyr_version=${ZEPHYR_VERSION}" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache west modules
+        uses: actions/cache@v3.0.11
+        continue-on-error: true
+        env:
+          cache_name: cache-zephyr-${{ env.zephyr_version }}-modules
         with:
           path: |
             modules/
@@ -22,40 +112,60 @@ jobs:
             zephyr/
             bootloader/
             zmk/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('manifest-dir/west.yml') }}
+          key: ${{ runner.os }}-build-${{ env.cache_name }}-${{ hashFiles('**/west.yml', '**/build.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-${{ env.cache_name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: West Init
-        run: west init -l config
+        run: west init -l ${{ needs.env-setup.outputs.config_path }}
+
       - name: West Update
         run: west update
+
       - name: West Zephyr export
         run: west zephyr-export
-      - name: West Build (Corne Left)
-        run: west build -s zmk/app -b nrfmicro_13 -- -DSHIELD=corne_left -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
-      - name: Corne DTS File
-        if: ${{ always() }}
-        run: cat -n build/zephyr/nrfmicro_13.dts.pre.tmp
-      - name: Corne Left Kconfig file
-        run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
-      - name: Rename zmk.uf2
-        run: cp build/zephyr/zmk.uf2 corne_left_nrfmicro_13.uf2
-      - name: Archive (Corne Left)
-        uses: actions/upload-artifact@v2
-        with:
-          name: firmware
-          path: corne_left_nrfmicro_13.uf2
-      - name: West Build (Corne Right)
-        run: west build --pristine -s zmk/app -b nrfmicro_13 -- -DSHIELD=corne_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
 
-      - name: Corne Right Kconfig file
-        run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
-      - name: Rename zmk.uf2
-        run: cp build/zephyr/zmk.uf2 corne_right_nrfmicro_13.uf2
-      - name: Archive (Corne Right)
-        uses: actions/upload-artifact@v2
+      - name: Insert name into config
+        if: ${{ matrix.name }}
+        shell: bash -x {0}
+        run: |
+          non_primary_re="_right$"
+          if [[ ( -n "${{ matrix.shield }}" && "${{ matrix.shield }}" =~ $non_primary_re ) || "${{ matrix.board }}" =~ $non_primary_re ]]
+          then
+            echo "name=" >> $GITHUB_ENV
+          else
+            echo "name=-DCONFIG_ZMK_KEYBOARD_NAME=\\\"${{ matrix.name }}\\\"" >> $GITHUB_ENV
+          fi
+
+      - name: West Build (${{ env.display_name }})
+        shell: sh -x {0}
+        run: west build -s zmk/app -b ${{ matrix.board }} -- -DZMK_CONFIG=${GITHUB_WORKSPACE}/${{ needs.env-setup.outputs.config_path }} ${{ env.extra_cmake_args }} ${{ matrix.cmake-args }} ${{ env.name }}
+
+      - name: Remove name from config
+        if: ${{ matrix.name }}
+        shell: bash -x {0}
+        run: |
+          echo "name=" >> $GITHUB_ENV
+
+      - name: ${{ env.display_name }} Kconfig file
+        run: grep -v -e "^#" -e "^$" build/zephyr/.config | sort
+
+      - name: Rename artifacts
+        shell: sh -x {0}
+        run: |
+          mkdir build/artifacts
+          if [ -f build/zephyr/zmk.uf2 ]
+          then
+            cp build/zephyr/zmk.uf2 "build/artifacts/${{ env.artifact_name }}.uf2"
+          elif [ -f build/zephyr/zmk.${{ needs.env-setup.outputs.fallback_binary }} ]
+          then
+            cp build/zephyr/zmk.${{ needs.env-setup.outputs.fallback_binary }} "build/artifacts/${{ env.artifact_name }}.${{ needs.env-setup.outputs.fallback_binary }}"
+          fi
+
+      - name: Archive (${{ env.display_name }})
+        uses: actions/upload-artifact@v3
         with:
-          name: firmware
-          path: corne_right_nrfmicro_13.uf2
+          name: ${{ needs.env-setup.outputs.archive_name }}
+          path: build/artifacts
