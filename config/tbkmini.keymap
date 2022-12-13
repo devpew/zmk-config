@@ -67,7 +67,7 @@
 //                                   |  GUI   |   MO1   |   ENT   |       |  SPC  |   BKSP  |  CAPS   |
 //                                   '--------+---------+---------'       '-------+---------+---------'
                         bindings = <
-   &trans &kp ESC        &kp Q       &kp W      &kp E     &kp R           &kp T   &kp Y  &kp U           &kp I        &kp O     &kp P      &kp LBKT   &trans
+   &kp ESC        &kp Q       &kp W      &kp E     &kp R           &kp T   &kp Y  &kp U           &kp I        &kp O     &kp P      &kp LBKT
    &mt LCTRL TAB  &kp A       &kp S      &kp D     &kp F           &kp G   &kp H  &kp J           &kp K        &kp L     &kp SEMI   &kp SQT
    &kp LSHFT      &kp Z       &kp X      &kp C     &kp V           &kp B   &kp N  &kp M           &kp COMMA    &kp DOT   &kp FSLH   &mt RALT GRAVE
                   &kp LGUI    &mo 1      &lt NAVI RET              &kp SPACE       &kp BSPC    &kp CAPSLOCK
@@ -85,7 +85,7 @@ lower_layer {
 //                                   |  GUI   |         |   MO3   |       |   ,   |    .    |   ?     |
 //                                   '--------+---------+---------'       '-------+---------+---------'
                         bindings = <
-   &trans &kp ESC    &kp N1       &kp N2            &kp N3             &kp N4               &kp N5            &kp N6                   &kp N7                     &kp N8                 &kp N9                   &kp N0     &kp GRAVE &trans
+   &kp ESC    &kp N1       &kp N2            &kp N3             &kp N4               &kp N5            &kp N6                   &kp N7                     &kp N8                 &kp N9                   &kp N0     &kp GRAVE
    &trans     &kp EXCL     &kp AT            &kp HASH           &kp DLLR             &kp PRCNT         &kp CARET                &kp AMPS                   &kp KP_MULTIPLY        &kp LPAR                 &kp RPAR   &kp COLON
    &kp LSHFT  &trans       &kp KP_PLUS       &kp KP_MINUS       &kp LEFT_BRACE       &kp LEFT_BRACKET  &kp RIGHT_BRACKET        &kp RIGHT_BRACE            &kp KP_EQUAL           &kp UNDERSCORE           &trans     &trans
                                              &kp LGUI           &trans               &mo ADJUST        &kp KP_N1                &kp KP_N2                  &kp KP_N3
@@ -104,7 +104,7 @@ lower_layer {
 //                                   '--------+----------+----------'       '---------+----------+---------'
 
                         bindings = <
-   &trans &kp LG(LS(N4))  &trans     &kp PAGE_UP        &kp UP_ARROW      &kp PAGE_DOWN       &kp HOME                &kp CARET            &kp PAGE_UP             &kp UP_ARROW       &kp PAGE_DOWN      &kp HOME     &kp LG(LS(N4)) &trans
+   &kp LG(LS(N4))  &trans     &kp PAGE_UP        &kp UP_ARROW      &kp PAGE_DOWN       &kp HOME                &kp CARET            &kp PAGE_UP             &kp UP_ARROW       &kp PAGE_DOWN      &kp HOME     &kp LG(LS(N4))
    &trans                 &trans     &kp LEFT_ARROW     &kp DOWN_ARROW    &kp RIGHT_ARROW     &kp END                 &kp MINUS            &kp LEFT_ARROW          &kp DOWN_ARROW     &kp RIGHT_ARROW    &kp END      &trans
    &out OUT_TOG           &trans     &trans             &trans            &kp LC(LEFT_ARROW)  &kp LC(RIGHT_ARROW)     &kp LC(LEFT_ARROW)   &kp LC(RIGHT_ARROW)     &trans             &trans             &trans       &out OUT_TOG
                                      &kp LGUI           &mo ADJUST        &trans              &trans   &trans   &trans
@@ -123,7 +123,7 @@ lower_layer {
 //                             '--------+---------+---------'       '--------+--------+---------'
 
                         bindings = <
-   &trans &reset      &trans          &trans         &trans          &trans          &trans            &kp C_VOLUME_UP    &trans &trans &trans &trans &reset &trans
+   &reset      &trans          &trans         &trans          &trans          &trans            &kp C_VOLUME_UP    &trans &trans &trans &trans &reset
    &bt BT_CLR  &bt BT_SEL 0    &bt BT_SEL 1   &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4      &kp C_VOLUME_DOWN  &trans &trans &trans &trans &trans
    &trans      &trans          &trans         &trans          &trans          &trans            &trans             &trans &trans &trans &trans &trans
                                    &trans &trans &trans   &trans &trans &trans
