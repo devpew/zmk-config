@@ -18,7 +18,7 @@ include:
     name: "Jorne Brass"
   - board: nrfmicro_13_52833
     shield: [jorne_left, jorne_right]
-    name: ["Jorne Alps", "Sporne", "RT-22"]
+    name: ["Jorne Alps", "Sporne", "RT-22", "Corne"]
   - board: nrfmicro_13_52833
     shield: radpad
   - board: [jorian840_left, jorian840_right]
