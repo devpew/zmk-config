@@ -1,0 +1,8 @@
+# Copyright (c) 2021 Casey Webster
+# SPDX-License-Identifier: MIT
+
+config SHIELD_TBKMINI_LEFT
+    def_bool $(shields_list_contains,tbkmini_left)
+
+config SHIELD_TBKMINI_RIGHT
+    def_bool $(shields_list_contains,tbkmini_right)
