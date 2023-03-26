@@ -14,9 +14,9 @@
 ---
 include:
 
-  - board: nrfmicro_13_52833
+  - board: nrfmicro_13
     shield: tbkmini_left
-  - board: nrfmicro_13_52833
+  - board: nrfmicro_13
     shield: tbkmini_right
   - board: nrfmicro_13
     shield: [corne_left, corne_right]
